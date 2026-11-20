@@ -28,7 +28,7 @@ st.set_page_config(page_title="Cynbit Revio | Inquiry Intelligence", page_icon="
 st.markdown("""
 <style>
 :root { --ink:#172b4d; --muted:#586b84; --line:#dce5f0; --blue:#2764d8; --teal:#11a8a5; --paper:#f0f5fc; }
-.stApp { background:linear-gradient(135deg,#edf4fc 0%,#f7f8fc 52%,#edf7f8 100%); color:var(--ink); }
+.stApp { background-color:#f3f7fc; background-image:radial-gradient(ellipse at 88% 4%,#dceaff 0,transparent 34%),radial-gradient(ellipse at 4% 92%,#dff5f2 0,transparent 28%),linear-gradient(135deg,#f3f7fc 0%,#fbfcfe 52%,#f0f8f8 100%); color:var(--ink); }
 header[data-testid="stHeader"] { display:none !important; }
 div[data-testid="stToolbar"], .stDeployButton, #MainMenu { display:none !important; }
 footer { display:none !important; }
@@ -50,23 +50,32 @@ footer { display:none !important; }
 .section-label { color:#8996a8; font-size:10px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; margin:4px 0 8px; }
 .page-eyebrow { color:var(--blue); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:7px; }
 .page-subtitle { color:var(--muted); margin-top:-8px; margin-bottom:24px; }
-.page-heading { position:relative; overflow:hidden; display:flex; align-items:center; gap:17px; padding:22px 26px; margin:4px 0 24px; border:1px solid #dce7f5; border-radius:18px; background:linear-gradient(115deg,#ffffff 0%,#eef5ff 72%,#eaf8f7 100%); box-shadow:0 8px 24px #284a7010; }
+.page-heading { position:relative; overflow:hidden; display:flex; align-items:center; gap:17px; padding:22px 26px; margin:4px 0 24px; border:1px solid #dce7f5; border-radius:18px; background:radial-gradient(circle at 94% 5%,#d9e9ff 0,transparent 22%),linear-gradient(115deg,#ffffff 0%,#eef5ff 72%,#eaf8f7 100%); box-shadow:0 8px 24px #284a7010; }
 .page-heading:after { content:""; position:absolute; width:155px; height:155px; right:-38px; top:-70px; border-radius:50%; background:radial-gradient(circle,#3c91ed20 0%,#11a8a510 55%,transparent 70%); pointer-events:none; }
 .heading-mark { flex:0 0 48px; height:48px; display:grid; place-items:center; border-radius:15px; color:#fff; font-weight:750; font-size:13px; letter-spacing:.04em; background:linear-gradient(145deg,#2764d8,#11a8a5); box-shadow:0 5px 14px #2764d82b; }
 .page-heading h1 { margin:0 0 4px; font-size:1.9rem; color:var(--ink); }
 .page-heading .page-subtitle { margin:0; color:#586b84; }
 .stApp h2 { color:var(--ink); }
-[data-testid="stVerticalBlockBorderWrapper"] { background:rgba(255,255,255,.88); border-color:#dce5f0 !important; border-radius:16px !important; box-shadow:0 5px 18px #284a700a; }
+[data-testid="stVerticalBlockBorderWrapper"] { background:rgba(255,255,255,.92); border-color:#dce5f0 !important; border-radius:16px !important; box-shadow:0 5px 18px #284a700a; transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+[data-testid="stVerticalBlockBorderWrapper"]:hover { border-color:#c4d7f0 !important; box-shadow:0 9px 24px #284a7012; transform:translateY(-1px); }
 [data-testid="stFileUploader"] { background:#fff; border:1px dashed #b9cbe1; border-radius:15px; padding:14px; }
-[data-testid="stDataFrame"] { border:1px solid #e1e8f1; border-radius:12px; overflow:hidden; }
+[data-testid="stDataFrame"] { border:1px solid #e1e8f1; border-radius:12px; overflow:hidden; background:#fff; }
+[data-testid="stProgress"] > div > div { background:linear-gradient(90deg,#3973e6,#16a6a4); }
 [data-testid="stPlotlyChart"] { background:#fff; border-radius:12px; }
 .empty-state { padding:24px 26px; border-radius:16px; border:1px solid #dce7f5; background:linear-gradient(110deg,#fff,#eff6ff); }
 .empty-state h3 { margin-top:0; color:#203b62; }
 .kicker { color:#3470bd; font-size:11px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
 
-.welcome { background:linear-gradient(115deg,#2764d8,#168f9e); border-radius:16px; padding:28px 30px; color:#fff; margin:8px 0 22px; }
+.welcome { position:relative; overflow:hidden; display:flex; align-items:center; min-height:218px; background:linear-gradient(115deg,#2258bd 0%,#2879ce 55%,#168f9e 100%); border-radius:20px; padding:30px 34px; color:#fff; margin:8px 0 22px; box-shadow:0 16px 34px #205aa52b; }
+.welcome-copy { position:relative; z-index:2; max-width:70%; }
+.hero-visual { position:absolute; width:230px; height:230px; right:6%; top:50%; transform:translateY(-50%); border-radius:50%; background:radial-gradient(circle,#ffffff30 0 22%,#ffffff13 23% 46%,transparent 47%); }
+.hero-orbit { position:absolute; inset:21px; border:1px solid #ffffff63; border-radius:50%; transform:rotate(-24deg) scaleX(1.18); }
+.hero-orbit:after { content:""; position:absolute; inset:20px -18px; border:1px solid #ffffff47; border-radius:50%; transform:rotate(49deg); }
+.hero-core { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:72px; height:72px; display:grid; place-items:center; border-radius:23px; background:linear-gradient(145deg,#fff,#dceaff); color:#2863c7; font-weight:800; font-size:19px; box-shadow:0 12px 24px #113a7b4c; }
+.hero-node { position:absolute; display:grid; place-items:center; width:40px; height:40px; border-radius:13px; border:1px solid #ffffffa8; background:#ffffffed; color:#2863c7; font-size:10px; font-weight:800; box-shadow:0 7px 20px #153e7540; }
+.hero-node.one { top:20px; left:31px; } .hero-node.two { top:47px; right:5px; } .hero-node.three { bottom:16px; left:52px; } .hero-node.four { bottom:35px; right:12px; }
 .welcome h2 { color:#fff; font-size:24px; margin:0 0 7px; }
-.welcome p { color:#d7e5f5; margin:0; max-width:720px; line-height:1.55; }
+.welcome p { color:#e8f2ff; margin:0; max-width:680px; line-height:1.6; }
 .welcome-tag { color:#d9f5f4; font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px; }
 .stMetric { background:#fff; border:1px solid var(--line); border-radius:13px; padding:14px 16px; }
 [data-testid="stMetricLabel"] p { color:var(--muted); font-size:14px; }
@@ -205,7 +214,7 @@ page_header(page)
 
 if page == "Overview":
     st.markdown(
-        '<div class="welcome"><div class="welcome-tag">A clearer start to every conversation</div><h2>Understand the request. Plan the follow-up.</h2><p>Classify project inquiries, capture the details that were mentioned, and prepare a thoughtful first reply. Every suggestion stays reviewable.</p></div>',
+        '<div class="welcome"><div class="welcome-copy"><div class="welcome-tag">A clearer start to every conversation</div><h2>Understand the request. Plan the follow-up.</h2><p>Classify project inquiries, capture the details that were mentioned, and prepare a thoughtful first reply. Every suggestion stays reviewable.</p></div><div class="hero-visual" aria-hidden="true"><div class="hero-orbit"></div><div class="hero-core">CR</div><div class="hero-node one">AI</div><div class="hero-node two">CSV</div><div class="hero-node three">ML</div><div class="hero-node four">CRM</div></div></div>',
         unsafe_allow_html=True,
     )
     rows = st.session_state.records
@@ -238,7 +247,7 @@ if page == "Overview":
             with st.container(border=True):
                 st.markdown("#### Inquiries by category")
                 if px:
-                    fig = px.bar(counts, x="Inquiries", y="Category", orientation="h", color="Category", template="plotly_white")
+                    fig = px.bar(counts, x="Inquiries", y="Category", orientation="h", color="Category", color_discrete_sequence=["#3973e6", "#16a6a4", "#7666d8", "#df9f34", "#db6885", "#6f8fb9"], template="plotly_white")
                     fig.update_layout(showlegend=False, margin=dict(l=0, r=5, t=5, b=5), height=250)
                     st.plotly_chart(fig, width="stretch")
                 else:
@@ -352,7 +361,7 @@ elif page == "Analytics":
             with st.container(border=True):
                 st.markdown("#### By service category")
                 if px:
-                    fig = px.bar(category_counts, x="Category", y="Inquiries", color="Category", template="plotly_white")
+                    fig = px.bar(category_counts, x="Category", y="Inquiries", color="Category", color_discrete_sequence=["#3973e6", "#16a6a4", "#7666d8", "#df9f34", "#db6885", "#6f8fb9"], template="plotly_white")
                     fig.update_layout(showlegend=False, margin=dict(l=10, r=10, t=10, b=10), height=300)
                     st.plotly_chart(fig, width="stretch")
                 else:
@@ -361,7 +370,7 @@ elif page == "Analytics":
             with st.container(border=True):
                 st.markdown("#### By priority")
                 if px:
-                    fig = px.bar(priority_counts, x="Priority", y="Inquiries", color="Priority", template="plotly_white")
+                    fig = px.bar(priority_counts, x="Priority", y="Inquiries", color="Priority", color_discrete_map={"High":"#dc6a6a", "Medium":"#dfa43e", "Low":"#39a47f"}, template="plotly_white")
                     fig.update_layout(showlegend=False, margin=dict(l=10, r=10, t=10, b=10), height=300)
                     st.plotly_chart(fig, width="stretch")
                 else:
@@ -369,7 +378,7 @@ elif page == "Analytics":
         st.markdown("#### Most requested services")
         service_counts = df["requested_services"].str.split("; ").explode().value_counts().rename_axis("Service").reset_index(name="Requests")
         if px:
-            fig = px.bar(service_counts, x="Service", y="Requests", color="Service", template="plotly_white")
+            fig = px.bar(service_counts, x="Service", y="Requests", color="Service", color_discrete_sequence=["#3973e6", "#16a6a4", "#7666d8", "#df9f34", "#db6885", "#6f8fb9"], template="plotly_white")
             fig.update_layout(showlegend=False, margin=dict(l=10, r=10, t=10, b=10), height=280)
             st.plotly_chart(fig, width="stretch")
         else:
