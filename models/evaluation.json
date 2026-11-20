@@ -1,0 +1,71 @@
+{
+  "dataset": "Synthetic examples only; not Cynbit customer data",
+  "n_total": 192,
+  "n_train": 144,
+  "n_test": 48,
+  "split": "stratified per-class 75/25, deterministic order",
+  "model_backend": "Offline multinomial Naive Bayes fallback (scikit-learn unavailable)",
+  "accuracy": 1.0,
+  "precision_macro": 1.0,
+  "recall_macro": 1.0,
+  "f1_macro": 1.0,
+  "labels": [
+    "AI/ML",
+    "Automation",
+    "Cloud Solutions",
+    "Mobile App Development",
+    "Other",
+    "Web Development"
+  ],
+  "confusion_matrix": [
+    [
+      8,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      8,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      8,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      8,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      8,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      8
+    ]
+  ],
+  "note": "Template-based synthetic holdout; metrics are an implementation check, not a real-world generalization estimate."
+}
