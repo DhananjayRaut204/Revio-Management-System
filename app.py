@@ -50,6 +50,20 @@ footer { display:none !important; }
 .section-label { color:#8996a8; font-size:10px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; margin:4px 0 8px; }
 .page-eyebrow { color:var(--blue); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:7px; }
 .page-subtitle { color:var(--muted); margin-top:-8px; margin-bottom:24px; }
+.page-heading { position:relative; overflow:hidden; display:flex; align-items:center; gap:17px; padding:22px 26px; margin:4px 0 24px; border:1px solid #dce7f5; border-radius:18px; background:linear-gradient(115deg,#ffffff 0%,#eef5ff 72%,#eaf8f7 100%); box-shadow:0 8px 24px #284a7010; }
+.page-heading:after { content:""; position:absolute; width:155px; height:155px; right:-38px; top:-70px; border-radius:50%; background:radial-gradient(circle,#3c91ed20 0%,#11a8a510 55%,transparent 70%); pointer-events:none; }
+.heading-mark { flex:0 0 48px; height:48px; display:grid; place-items:center; border-radius:15px; color:#fff; font-weight:750; font-size:13px; letter-spacing:.04em; background:linear-gradient(145deg,#2764d8,#11a8a5); box-shadow:0 5px 14px #2764d82b; }
+.page-heading h1 { margin:0 0 4px; font-size:1.9rem; color:var(--ink); }
+.page-heading .page-subtitle { margin:0; color:#586b84; }
+.stApp h2 { color:var(--ink); }
+[data-testid="stVerticalBlockBorderWrapper"] { background:rgba(255,255,255,.88); border-color:#dce5f0 !important; border-radius:16px !important; box-shadow:0 5px 18px #284a700a; }
+[data-testid="stFileUploader"] { background:#fff; border:1px dashed #b9cbe1; border-radius:15px; padding:14px; }
+[data-testid="stDataFrame"] { border:1px solid #e1e8f1; border-radius:12px; overflow:hidden; }
+[data-testid="stPlotlyChart"] { background:#fff; border-radius:12px; }
+.empty-state { padding:24px 26px; border-radius:16px; border:1px solid #dce7f5; background:linear-gradient(110deg,#fff,#eff6ff); }
+.empty-state h3 { margin-top:0; color:#203b62; }
+.kicker { color:#3470bd; font-size:11px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
+
 .welcome { background:linear-gradient(115deg,#2764d8,#168f9e); border-radius:16px; padding:28px 30px; color:#fff; margin:8px 0 22px; }
 .welcome h2 { color:#fff; font-size:24px; margin:0 0 7px; }
 .welcome p { color:#d7e5f5; margin:0; max-width:720px; line-height:1.55; }
@@ -151,7 +165,12 @@ def open_manual_analysis():
 
 def page_header(page_name):
     title, subtitle = PAGE_COPY[page_name]
-    st.markdown(f'<div class="page-eyebrow">Cynbit Revio / Workspace</div><h1>{title}</h1><div class="page-subtitle">{subtitle}</div>', unsafe_allow_html=True)
+    marks = {"Overview": "CR", "Analyze Inquiry": "AI", "Bulk Analysis": "CSV", "Analytics": "CH", "About": "CR"}
+    mark = marks[page_name]
+    if page_name == "Overview":
+        st.markdown(f'<div class="page-eyebrow">Cynbit Revio / Workspace</div><h1>{title}</h1><div class="page-subtitle">{subtitle}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown(f'<div class="page-heading"><div class="heading-mark">{mark}</div><div><div class="kicker">Cynbit Revio / Workspace</div><h1>{title}</h1><div class="page-subtitle">{subtitle}</div></div></div>', unsafe_allow_html=True)
 
 
 def render_result(row):
@@ -239,13 +258,16 @@ if page == "Overview":
         step3.markdown("**03 · Review**\n\nA person checks the result and edits the suggested reply.")
 
 elif page == "Analyze Inquiry":
-    with st.form("manual_inquiry", border=False):
-        inquiry_text = st.text_area(
-            "Inquiry message",
-            height=160,
-            placeholder="We need an AI dashboard connected to our CRM. Budget is $20,000 and we hope to launch in six weeks.",
-        )
-        submitted = st.form_submit_button("Analyze inquiry", type="primary")
+    with st.container(border=True):
+        st.markdown("#### Start with the customer’s message")
+        st.caption("The classifier suggests a category. The details and priority are based on visible rules, so you can check how each result was produced.")
+        with st.form("manual_inquiry", border=False):
+            inquiry_text = st.text_area(
+                "Inquiry message",
+                height=160,
+                placeholder="We need an AI dashboard connected to our CRM. Budget is $20,000 and we hope to launch in six weeks.",
+            )
+            submitted = st.form_submit_button("Analyze inquiry", type="primary")
     if submitted:
         if not inquiry_text.strip():
             st.warning("Add an inquiry message to analyze.")
@@ -261,8 +283,12 @@ elif page == "Analyze Inquiry":
         st.caption("Your inquiry is processed locally with the included model and extraction rules.")
 
 elif page == "Bulk Analysis":
-    st.markdown("Upload a CSV file with a column named `inquiry`. Existing columns are preserved in the downloaded results.")
-    upload = st.file_uploader("Choose a CSV file", type=["csv"], label_visibility="collapsed")
+    with st.container(border=True):
+        st.markdown("#### Bring in a batch of inquiries")
+        st.caption("Upload a CSV with a column named `inquiry`. Other columns are kept in the output, including any original labels.")
+        sample_csv = (ROOT / "data" / "sample_inquiries.csv").read_bytes()
+        st.download_button("Download sample CSV", sample_csv, file_name="sample_inquiries.csv", mime="text/csv")
+        upload = st.file_uploader("Choose a CSV file", type=["csv"], label_visibility="collapsed")
     if upload is not None:
         try:
             input_df = pd.read_csv(upload)
@@ -311,7 +337,9 @@ elif page == "Bulk Analysis":
 elif page == "Analytics":
     rows = st.session_state.records
     if not rows:
-        st.info("Analyze an inquiry or upload a CSV to see session analytics here.")
+        with st.container(border=True):
+            st.markdown('<div class="empty-state"><div class="kicker">Your workspace is ready</div><h3>Charts appear after the first analysis</h3><p>Use your own inquiry or load the clearly marked demo examples from Overview. Nothing here is pre-filled as real customer activity.</p></div>', unsafe_allow_html=True)
+            st.button("Analyze an inquiry", type="primary", on_click=open_manual_analysis)
     else:
         df = pd.DataFrame(rows)
         metric_a, metric_b = st.columns(2)
@@ -348,24 +376,20 @@ elif page == "Analytics":
             st.bar_chart(service_counts.set_index("Service"))
 
 elif page == "About":
-    st.markdown("""
-    This is an independent assessment prototype exploring one way to organize project inquiries. “Cynbit Revio” is the project label; this is not an official Cynbit or Revio feature and it is not connected to Cynbit systems.
-
-    **What it does**
-    - Uses a lightweight text classifier to suggest a service category.
-    - Extracts stated budget, timeline, services, and selected requirements.
-    - Applies explicit rules for priority and explains the reasons.
-    - Drafts an editable response without an external AI API.
-
-    **Data and reliability**
-    - The 192 training examples are synthetic; no customer data is included.
-    - Confidence is a model score, not a guarantee of correctness.
-    - Priority is rule-based, not an ML prediction.
-    - A human should review classifications and response drafts.
-
-    **Current model**
-    """)
-    st.info(f"{model_name} | CPU only | Local prototype")
-    st.caption("The synthetic holdout score is not evidence of real-world performance. See the Technical Approach Report for evaluation limits and the next validation steps.")
-
-
+    st.markdown("This is an independent assessment prototype. The Cynbit Revio name is a project label; the app is not an official Cynbit or Revio feature and is not connected to Cynbit systems.")
+    left, right = st.columns(2, gap="large")
+    with left:
+        with st.container(border=True):
+            st.markdown("#### What the app does")
+            st.markdown("- Suggests a service category from an inquiry message.\n- Extracts budget, timeline, services, and selected requirements.\n- Explains a rule-based priority suggestion.\n- Drafts a reply for a person to review and edit.")
+        with st.container(border=True):
+            st.markdown("#### Model in this build")
+            st.markdown(f"**{model_name}**\n\nRuns locally on CPU. The standard training path uses TF-IDF and Logistic Regression when scikit-learn is installed.")
+    with right:
+        with st.container(border=True):
+            st.markdown("#### Data and reliability")
+            st.markdown("- Training examples are synthetic; no customer data is included.\n- Confidence is a model score, not a guarantee.\n- Priority comes from transparent rules, not ML.\n- A person should review every classification and draft.")
+        with st.container(border=True):
+            st.markdown("#### Current limits")
+            st.markdown("This prototype does not store inquiries after the session, connect to a CRM, or send messages. The sample evaluation score is not evidence of real-world performance.")
+    st.caption("For the data, model setup, and research sources, see the two reports in the `reports` folder.")
