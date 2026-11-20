@@ -67,11 +67,3 @@ A meaningful evaluation needs permissioned real examples, agreed category labels
 ## Limits
 
 This is a local prototype. Confidence can be wrong, text extraction may miss unusual wording, and the priority rules are examples rather than Cynbit policy. The app does not save data after the session, connect to a CRM, or send replies. Review every result before using it.
-
-## Before publishing
-
-1. Create a GitHub repository and push this project folder.
-2. For Streamlit Community Cloud, select the repository, branch, and `app.py` entry point.
-3. Include the model artifact in `models/`. Do not upload credentials, `.venv`, or private customer data.
-
-Cynbit pages reviewed: [Home](https://www.cynbit.in/), [Services](https://www.cynbit.in/services), and [Products](https://www.cynbit.in/products), accessed 20 November 2026. The reports in `reports/` have the full research and technical notes.
