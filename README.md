@@ -8,7 +8,7 @@ Cynbit publicly presents AI automation, custom software/cloud work, product demo
 
 ## Features
 
-- TF-IDF + Logistic Regression multiclass service classification.
+- Service classification with TF-IDF + Logistic Regression when scikit-learn is available; the included offline model is a lightweight Naive Bayes fallback.
 - Confidence display and configurable low-confidence fallback to `Other (uncertain)`.
 - Rule-based budget, timeline, service, and requirement extraction.
 - High/medium/low heuristic priority with reasons, clearly separated from ML.
@@ -22,7 +22,7 @@ Cynbit publicly presents AI automation, custom software/cloud work, product demo
 flowchart LR
  A[Manual text or CSV] --> B[Cleaning]
  B --> C[TF-IDF features]
- C --> D[Logistic Regression]
+ C --> D[Logistic Regression or offline Naive Bayes]
  D --> E[Class and confidence]
  B --> F[Regex and keyword extraction]
  F --> G[Rule-based priority]
@@ -34,7 +34,7 @@ flowchart LR
 
 ## Technology
 
-Python 3.10+, Pandas, NumPy, scikit-learn, TF-IDF, Logistic Regression, Streamlit, Plotly, Joblib. The pipeline runs on CPU and requires no credentials.
+Python 3.10+, Pandas, NumPy, scikit-learn, TF-IDF, Logistic Regression, Streamlit, Plotly, and Joblib. The app also supports the included offline Naive Bayes model. It runs on CPU and requires no credentials.
 
 ## Project structure
 

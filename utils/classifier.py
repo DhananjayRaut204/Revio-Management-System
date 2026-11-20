@@ -17,7 +17,12 @@ class SimpleNB:
         return result
 def load_model(path=MODEL_PATH):
     if Path(path).exists():
-        import joblib; return joblib.load(path)
+        try:
+            import joblib
+            return joblib.load(path)
+        except ModuleNotFoundError:
+            if not FALLBACK_PATH.exists():
+                raise
     if FALLBACK_PATH.exists(): return SimpleNB(json.loads(FALLBACK_PATH.read_text(encoding="utf-8")))
     raise FileNotFoundError("Trained model missing. Run: python train_model.py")
 def predict(text, model=None, threshold=0.45):

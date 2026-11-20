@@ -24,7 +24,9 @@ def test_ui_empty_input_and_invalid_csv():
  from streamlit.testing.v1 import AppTest
  at=AppTest.from_file("app.py",default_timeout=30).run()
  at.radio[0].set_value("Analyze Inquiry").run(); at.button[0].click().run()
- assert not at.exception and any("enter an inquiry" in x.value.lower() for x in at.warning)
- bulk=AppTest.from_file("app.py",default_timeout=30).run(); bulk.radio[0].set_value("Bulk Inquiry Analysis").run()
+ assert not at.exception and any("add an inquiry" in x.value.lower() for x in at.warning)
+ bulk=AppTest.from_file("app.py",default_timeout=30).run(); bulk.radio[0].set_value("Bulk Analysis").run()
  bulk.file_uploader[0].upload("bad.csv",b"name\nfoo\n").run()
  assert not bulk.exception and any("column named" in x.value.lower() for x in bulk.error)
+
+
