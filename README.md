@@ -53,7 +53,7 @@ requirements.txt
 
 ```powershell
 cd .\Cynbit-Inquiry-Intelligence
-py -3.11 -m venv .venv
+py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
@@ -79,7 +79,7 @@ The included fallback run produced 1.00 accuracy, macro precision, recall, and F
 
 ## Screenshots
 
-No screenshots are included; capture your own after running the local app.
+No application UI screenshots are included. Capture the running dashboard before submission if your reviewer expects visual evidence.
 
 ## Limitations
 
