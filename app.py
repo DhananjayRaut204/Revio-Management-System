@@ -29,6 +29,9 @@ st.markdown("""
 <style>
 :root { --ink:#172b4d; --muted:#586b84; --line:#dce5f0; --blue:#2764d8; --teal:#11a8a5; --paper:#f0f5fc; }
 .stApp { background:linear-gradient(135deg,#edf4fc 0%,#f7f8fc 52%,#edf7f8 100%); color:var(--ink); }
+header[data-testid="stHeader"] { display:none !important; }
+div[data-testid="stToolbar"], .stDeployButton, #MainMenu { display:none !important; }
+footer { display:none !important; }
 .block-container { max-width:1280px; padding-top:2rem; padding-bottom:3rem; }
 .stApp p, .stApp label, .stApp [data-testid="stMarkdownContainer"] { font-size:16px; }
 .stApp h1 { font-size:2.15rem; letter-spacing:-.025em; }
@@ -364,4 +367,5 @@ elif page == "About":
     """)
     st.info(f"{model_name} | CPU only | Local prototype")
     st.caption("The synthetic holdout score is not evidence of real-world performance. See the Technical Approach Report for evaluation limits and the next validation steps.")
+
 
