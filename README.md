@@ -1,58 +1,43 @@
 # Cynbit Inquiry Intelligence
 
-A local, explainable proof of concept for sorting project inquiries into service categories and extracting details for human follow-up. This is an independent assessment prototype, not a Cynbit product or deployed integration.
+A small AI/ML assessment project that helps organize project inquiries. The dashboard is labeled “Cynbit Revio - Inquiry Intelligence” for this assessment. It is an independent prototype, not an official Cynbit or Revio feature, and it is not connected to Cynbit systems.
 
-## Why this opportunity
+## What it does
 
-Cynbit publicly presents AI automation, custom software/cloud work, product demos, and an inquiry contact path. Its site already describes AI agents, AI coding evaluation/mentoring, and Revio review sentiment and response features. This project therefore explores a different workflow: **internal inquiry triage**. The public pages do not establish that Cynbit currently has this gap or uses this tool. No customer records or internal workflows were available.
+- Suggests a service category from an inquiry message.
+- Pulls out details such as budget and timeline when they are in the message.
+- Gives a simple priority suggestion and shows why.
+- Drafts a reply that a person can edit.
+- Analyzes a CSV of messages and shows basic charts.
+- Includes a sample dashboard button so you can preview the app without providing data.
 
-## Features
+The sample inquiries are synthetic. They are not real customer messages.
 
-- Service classification with TF-IDF + Logistic Regression when scikit-learn is available; the included offline model is a lightweight Naive Bayes fallback.
-- Confidence display and configurable low-confidence fallback to `Other (uncertain)`.
-- Rule-based budget, timeline, service, and requirement extraction.
-- High/medium/low heuristic priority with reasons, clearly separated from ML.
-- Editable, template-based reply suggestion; no API key.
-- Manual analysis, batch CSV processing/download, and interactive charts.
-- 192 labeled synthetic inquiries for reproducible demonstration.
+## Why this idea
 
-## Architecture
+Cynbit's website describes AI and software services and includes inquiry and product demo paths. It also already presents AI features in products such as Cynbit Studio and Revio. This project explores inquiry organization as a different idea. The public website does not show whether Cynbit has this need today, so this is a proposal to validate, not a claim about the company's internal process.
+
+## How it works
 
 ```mermaid
 flowchart LR
- A[Manual text or CSV] --> B[Cleaning]
- B --> C[TF-IDF features]
- C --> D[Logistic Regression or offline Naive Bayes]
- D --> E[Class and confidence]
- B --> F[Regex and keyword extraction]
- F --> G[Rule-based priority]
- E --> H[Results and analytics]
- G --> H
- F --> I[Template reply]
- I --> H
+    A[Message or CSV] --> B[Clean text]
+    B --> C[ML category prediction]
+    B --> D[Extract details with rules]
+    D --> E[Priority suggestion]
+    C --> F[Results and charts]
+    E --> F
+    D --> G[Editable reply draft]
+    G --> F
 ```
 
-## Technology
+The preferred training setup uses TF-IDF and Logistic Regression. The included model also supports a small Naive Bayes fallback, used when scikit-learn is unavailable. Priority, detail extraction, and reply drafting are rule-based; they are separate from the classifier.
 
-Python 3.10+, Pandas, NumPy, scikit-learn, TF-IDF, Logistic Regression, Streamlit, Plotly, and Joblib. The app also supports the included offline Naive Bayes model. It runs on CPU and requires no credentials.
+## Run on Windows
 
-## Project structure
-
-```text
-app.py                     Streamlit dashboard
-train_model.py             Training, stratified split, metrics, model export
-data/sample_inquiries.csv  Labeled synthetic examples
-models/                    Trained pipeline and evaluation.json (generated)
-utils/                     Cleaning, classifier, extractors, priority, response
-reports/                   Opportunity and technical PDF reports
-tests/                     Unit and application logic checks
-requirements.txt
-```
-
-## Install and run (Windows PowerShell)
+Open PowerShell in the extracted `Cynbit-Inquiry-Intelligence` folder, then run:
 
 ```powershell
-cd .\Cynbit-Inquiry-Intelligence
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
@@ -61,45 +46,32 @@ python train_model.py
 streamlit run app.py
 ```
 
-If PowerShell blocks activation, run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in that terminal, then activate. To run checks: `python -m pytest -q`.
+If PowerShell blocks activation, run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in that terminal, then activate the environment. The app opens in your browser. On the Overview page, select **Load sample dashboard** to preview the charts, or open **Analyze Inquiry** to try your own message.
 
-## How to train
+## Training and results
 
-`python train_model.py` reads `data/sample_inquiries.csv`, normalizes text, holds out a stratified 25% test split (random seed 42), trains a TF-IDF + balanced Logistic Regression pipeline, prints accuracy/macro precision/recall/F1 and writes a scikit-learn Joblib pipeline when that dependency is available, otherwise a transparent offline multinomial Naive Bayes model in JSON, plus `models/evaluation.json`. Current trained artifact uses the offline fallback because network installation was unavailable. The templated examples share patterns across the split; these metrics are only a pipeline smoke check, not a measure of production generalization.
+The included CSV has 192 synthetic examples across six categories. The current fallback model scored 1.00 on its small synthetic holdout set. That score is artificially high because the examples reuse similar templates. It only checks that the training flow runs; it does not predict how the model will perform on real inquiries. No Cynbit customer data was used.
 
-## Sample
+A meaningful evaluation needs permissioned real examples, agreed category labels, and a separate test set that does not repeat the training templates.
 
-Input: `We need an AI dashboard integrated with our CRM. Budget is $20,000; delivery in 6 weeks.`
+## Project files
 
-Expected output format: predicted category and probability, priority + heuristic reasons, extracted budget/timeline, service/requirement terms, and a draft response. Exact prediction and scores depend on the saved model. Review every prediction.
+- `app.py` - Streamlit dashboard
+- `train_model.py` - trains the classifier and saves evaluation results
+- `data/sample_inquiries.csv` - synthetic examples
+- `models/` - model and evaluation output
+- `utils/` - text cleaning, classification, extraction, priority, and reply helpers
+- `reports/` - the two assessment reports
+- `tests/` - checks for the main app logic
 
-## Evaluation
+## Limits
 
-The included fallback run produced 1.00 accuracy, macro precision, recall, and F1 on 48 synthetic held-out rows. These perfect scores are a consequence of repeated templated patterns and are not a meaningful estimate of real-world performance. See generated `models/evaluation.json`; no Cynbit data was used.
+This is a local prototype. Confidence can be wrong, text extraction may miss unusual wording, and the priority rules are examples rather than Cynbit policy. The app does not save data after the session, connect to a CRM, or send replies. Review every result before using it.
 
-## Screenshots
+## Before publishing
 
-No application UI screenshots are included. Capture the running dashboard before submission if your reviewer expects visual evidence.
+1. Create a GitHub repository and push this project folder.
+2. For Streamlit Community Cloud, select the repository, branch, and `app.py` entry point.
+3. Include the model artifact in `models/`. Do not upload credentials, `.venv`, or private customer data.
 
-## Limitations
-
-- Synthetic, small, template-based dataset; no real customer inquiries and no validated label taxonomy.
-- Confidence is not calibrated probability of correctness. Unknown/out-of-domain text may still receive a familiar class.
-- Regex extraction is English-centric and may miss varied currency/date formats.
-- Priority is a transparent heuristic, not a trained model or business policy.
-- Reply drafts are generic and require human review. No CRM integration, persistence, authentication, or deployment is configured.
-
-## Future work
-
-Obtain permissioned, anonymized, representative labeled inquiries; define categories and priority with staff; evaluate temporal and source-held-out test sets; calibrate confidence and monitor drift; add privacy controls and audit trails; pilot with human-in-the-loop feedback before integrating with a CRM.
-
-## Reports and research sources
-
-- [AI Opportunity Report](reports/AI_Opportunity_Report.pdf)
-- [Technical Approach Report](reports/Technical_Approach_Report.pdf)
-- Cynbit [home](https://www.cynbit.in/), [services](https://www.cynbit.in/services), and [products](https://www.cynbit.in/products) pages, accessed 20 Nov 2026. See reports for distinctions between site claims and proposed opportunities.
-
-## GitHub and Streamlit Community Cloud
-
-1. Create an empty public repository on GitHub. From this project directory: `git init`, `git add .`, `git commit -m "Build inquiry intelligence prototype"`, `git branch -M main`, `git remote add origin https://github.com/<YOUR-USERNAME>/<REPO>.git`, `git push -u origin main`. Replace the placeholder with your repository URL; do not commit credentials.
-2. For Streamlit Community Cloud, sign in at [share.streamlit.io](https://share.streamlit.io/), choose the repository and branch, set `app.py` as the entry point, and deploy. The app expects a committed model artifact from `models/` (`.joblib` or fallback `.json`). Train it locally before pushing. Current local deployment is the verified target; cloud deployment has not been performed.
+Cynbit pages reviewed: [Home](https://www.cynbit.in/), [Services](https://www.cynbit.in/services), and [Products](https://www.cynbit.in/products), accessed 20 November 2026. The reports in `reports/` have the full research and technical notes.

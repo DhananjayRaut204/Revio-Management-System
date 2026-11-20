@@ -24,31 +24,45 @@ PAGE_COPY = {
     "About": ("About this prototype", "What the model does, what it does not do, and where its data comes from."),
 }
 
-st.set_page_config(page_title="Cynbit | Inquiry Intelligence", page_icon="C", layout="wide")
+st.set_page_config(page_title="Cynbit Revio | Inquiry Intelligence", page_icon="🔷", layout="wide")
 st.markdown("""
 <style>
-:root { --ink:#172b4d; --muted:#68788d; --line:#e5eaf1; --blue:#2764d8; --paper:#f7f9fc; }
-.stApp { background:var(--paper); color:var(--ink); }
+:root { --ink:#172b4d; --muted:#586b84; --line:#dce5f0; --blue:#2764d8; --teal:#11a8a5; --paper:#f0f5fc; }
+.stApp { background:linear-gradient(135deg,#edf4fc 0%,#f7f8fc 52%,#edf7f8 100%); color:var(--ink); }
 .block-container { max-width:1280px; padding-top:2rem; padding-bottom:3rem; }
-[data-testid="stSidebar"] { background:#fff; border-right:1px solid var(--line); }
+.stApp p, .stApp label, .stApp [data-testid="stMarkdownContainer"] { font-size:16px; }
+.stApp h1 { font-size:2.15rem; letter-spacing:-.025em; }
+.stApp h2 { font-size:1.55rem; }
+.stApp h3 { font-size:1.2rem; }
+[data-testid="stMetricLabel"] p { font-size:14px; }
+[data-testid="stMetricValue"] { font-size:29px; }
+.stTextArea textarea { font-size:16px; line-height:1.55; }
+[data-testid="stSidebar"] { background:linear-gradient(180deg,#f7faff 0%,#eef4fb 100%); border-right:1px solid var(--line); }
 [data-testid="stSidebar"] > div:first-child { padding-top:1.4rem; }
-[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { color:var(--muted); }
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p, [data-testid="stSidebar"] [data-testid="stCaptionContainer"] { color:#52647d !important; }
 .brand { display:flex; align-items:center; gap:11px; padding:4px 2px 26px; }
-.brand-mark { width:38px; height:38px; border-radius:12px; display:grid; place-items:center; background:#eaf1ff; color:var(--blue); font-weight:800; font-size:20px; }
+.brand-mark { width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,#2764d8,#11a8a5); color:#fff; font-weight:800; font-size:14px; letter-spacing:-.06em; box-shadow:0 5px 14px #2764d833; }
 .brand-name { color:var(--ink); font-weight:750; font-size:16px; line-height:1.15; }
 .brand-sub { color:var(--muted); font-size:10px; letter-spacing:.12em; text-transform:uppercase; margin-top:4px; }
 .section-label { color:#8996a8; font-size:10px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; margin:4px 0 8px; }
 .page-eyebrow { color:var(--blue); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:7px; }
 .page-subtitle { color:var(--muted); margin-top:-8px; margin-bottom:24px; }
-.welcome { background:linear-gradient(115deg,#183b68,#285b91); border-radius:16px; padding:28px 30px; color:#fff; margin:8px 0 22px; }
+.welcome { background:linear-gradient(115deg,#2764d8,#168f9e); border-radius:16px; padding:28px 30px; color:#fff; margin:8px 0 22px; }
 .welcome h2 { color:#fff; font-size:24px; margin:0 0 7px; }
 .welcome p { color:#d7e5f5; margin:0; max-width:720px; line-height:1.55; }
-.welcome-tag { color:#c3d9f3; font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px; }
+.welcome-tag { color:#d9f5f4; font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px; }
 .stMetric { background:#fff; border:1px solid var(--line); border-radius:13px; padding:14px 16px; }
-[data-testid="stMetricLabel"] p { color:var(--muted); font-size:12px; }
-[data-testid="stMetricValue"] { color:var(--ink); font-size:25px; }
+[data-testid="stMetricLabel"] p { color:var(--muted); font-size:14px; }
+[data-testid="stMetricValue"] { color:var(--ink); font-size:29px; }
 .stButton > button, .stDownloadButton > button { border-radius:9px; font-weight:650; min-height:42px; }
-.stButton > button[kind="primary"] { background:var(--blue); border-color:var(--blue); }
+.stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] button, [data-testid="stDownloadButton"] button[kind="primary"] { background:var(--blue) !important; border-color:var(--blue) !important; color:#fff !important; }
+.stButton > button[kind="primary"]:hover, [data-testid="stFormSubmitButton"] button:hover { background:#1d50b4 !important; border-color:#1d50b4 !important; }
+.stTextArea textarea, .stTextInput input { background:#fff !important; color:#1e2e46 !important; border:1px solid #cbd7e6 !important; border-radius:10px !important; font-size:16px !important; line-height:1.55 !important; }
+.stTextArea textarea::placeholder, .stTextInput input::placeholder { color:#718198 !important; opacity:1; }
+[data-testid="stWidgetLabel"] p { color:#344761 !important; font-weight:600; }
+[data-testid="stCaptionContainer"] { color:#52647d !important; font-size:14px !important; }
+input[type="radio"] { accent-color:var(--blue); }
+[data-testid="stRadio"] label { color:#344761 !important; font-size:15px !important; }
 div[data-testid="stForm"] { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; }
 div[data-testid="stFileUploader"] section { border-radius:12px; }
 hr { border-color:var(--line); }
@@ -74,9 +88,16 @@ if "latest_analysis" not in st.session_state:
 
 model_name = "Naive Bayes (offline)" if model.__class__.__name__ == "SimpleNB" else "Logistic Regression"
 
+def clear_session():
+    st.session_state.records = []
+    st.session_state.latest_analysis = None
+    st.session_state.demo_loaded = False
+    st.session_state.last_bulk_fingerprint = None
+
+
 with st.sidebar:
     st.markdown(
-        '<div class="brand"><div class="brand-mark">C</div><div><div class="brand-name">Cynbit</div><div class="brand-sub">Inquiry intelligence</div></div></div>',
+        '<div class="brand"><div class="brand-mark">CR</div><div><div class="brand-name">Cynbit Revio</div><div class="brand-sub">Inquiry intelligence</div></div></div>',
         unsafe_allow_html=True,
     )
     st.markdown('<div class="section-label">Workspace</div>', unsafe_allow_html=True)
@@ -86,6 +107,8 @@ with st.sidebar:
     st.caption("Local demonstration")
     st.caption("Synthetic training examples")
     st.caption("Human review recommended")
+    st.divider()
+    st.button("Clear session", use_container_width=True, disabled=not st.session_state.records, on_click=clear_session)
 
 
 def analyze(text):
@@ -108,13 +131,24 @@ def analyze(text):
     }
 
 
+def load_sample_dashboard():
+    sample_df = pd.read_csv(ROOT / "data" / "sample_inquiries.csv")
+    preferred = ["AI/ML", "Web Development", "Cloud Solutions"]
+    examples = sample_df[sample_df["category"].isin(preferred)].drop_duplicates("category")
+    for _, sample in examples.iterrows():
+        row = analyze(str(sample["inquiry"]))
+        row["record_source"] = "Synthetic demo"
+        st.session_state.records.append(row)
+    st.session_state["demo_loaded"] = True
+
+
 def open_manual_analysis():
     st.session_state["Navigation"] = "Analyze Inquiry"
 
 
 def page_header(page_name):
     title, subtitle = PAGE_COPY[page_name]
-    st.markdown(f'<div class="page-eyebrow">Cynbit / Workspace</div><h1>{title}</h1><div class="page-subtitle">{subtitle}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="page-eyebrow">Cynbit Revio / Workspace</div><h1>{title}</h1><div class="page-subtitle">{subtitle}</div>', unsafe_allow_html=True)
 
 
 def render_result(row):
@@ -154,10 +188,11 @@ if page == "Overview":
     )
     rows = st.session_state.records
     categories = len(getattr(model, "classes_", []))
-    a, b, c = st.columns(3)
+    a, b, c, d = st.columns(4)
     a.metric("Inquiries analyzed", len(rows))
     b.metric("High priority", sum(item["priority"] == "High" for item in rows))
-    c.metric("Service categories", categories)
+    c.metric("Needs review", sum(bool(item.get("confidence_warning")) for item in rows))
+    d.metric("Service categories", categories)
     st.markdown("### Get started")
     start, info = st.columns([1, 1], gap="large")
     with start:
@@ -171,11 +206,34 @@ if page == "Overview":
             st.write("Upload a CSV with an `inquiry` column and download the analyzed file.")
             st.caption(f"Current classifier: {model_name}. Training examples are synthetic.")
     if rows:
-        st.markdown("### Recent analyses")
+        if st.session_state.get("demo_loaded"):
+            st.info("Demo records are synthetic examples included with the project. They are not real customer inquiries.")
+        st.markdown("### Activity in this session")
+        chart_col, table_col = st.columns([.85, 1.4], gap="large")
         recent = pd.DataFrame(rows[-5:])[ ["category", "priority", "budget", "timeline", "inquiry"] ]
-        st.dataframe(recent, width="stretch", hide_index=True)
+        counts = pd.DataFrame(rows)["category"].value_counts().rename_axis("Category").reset_index(name="Inquiries")
+        with chart_col:
+            with st.container(border=True):
+                st.markdown("#### Inquiries by category")
+                if px:
+                    fig = px.bar(counts, x="Inquiries", y="Category", orientation="h", color="Category", template="plotly_white")
+                    fig.update_layout(showlegend=False, margin=dict(l=0, r=5, t=5, b=5), height=250)
+                    st.plotly_chart(fig, width="stretch")
+                else:
+                    st.bar_chart(counts.set_index("Category"))
+        with table_col:
+            with st.container(border=True):
+                st.markdown("#### Recent inquiries")
+                st.dataframe(recent, width="stretch", hide_index=True)
     else:
-        st.info("Your session is ready. Analyzed inquiries will appear here.")
+        st.info("Your workspace is ready. Load a few sample inquiries to preview the dashboard, or start with your own message.")
+        st.button("Load sample dashboard", type="primary", on_click=load_sample_dashboard)
+        st.caption("Sample messages are synthetic and clearly labeled. They help you preview the charts without using customer data.")
+        st.markdown("### What happens to an inquiry?")
+        step1, step2, step3 = st.columns(3)
+        step1.markdown("**01 · Classify**\n\nA text model suggests a service category and confidence score.")
+        step2.markdown("**02 · Extract**\n\nSimple rules find budget, timeline, and project details.")
+        step3.markdown("**03 · Review**\n\nA person checks the result and edits the suggested reply.")
 
 elif page == "Analyze Inquiry":
     with st.form("manual_inquiry", border=False):
@@ -191,6 +249,7 @@ elif page == "Analyze Inquiry":
             st.session_state.latest_analysis = None
         else:
             result = analyze(inquiry_text)
+            result["record_source"] = "Manual entry"
             st.session_state.latest_analysis = result
             st.session_state.records.append(result)
     if st.session_state.latest_analysis:
@@ -221,10 +280,12 @@ elif page == "Bulk Analysis":
                         "budget": "Not stated", "timeline": "Not stated",
                         "requested_services": "Needs clarification", "requirements": "None detected",
                         "response_suggestion": "No reply generated for an empty inquiry.",
-                        "confidence_warning": "Empty inquiry; review manually.",
+                        "confidence_warning": "Empty inquiry; review manually.", "record_source": "CSV upload",
                     })
                 else:
-                    results.append(analyze(str(value)))
+                    row = analyze(str(value))
+                    row["record_source"] = "CSV upload"
+                    results.append(row)
             generated = pd.DataFrame(results).drop(columns=["inquiry"])
             source_df = input_df.reset_index(drop=True).copy()
             overlaps = [name for name in generated.columns if name in source_df.columns]
@@ -285,7 +346,7 @@ elif page == "Analytics":
 
 elif page == "About":
     st.markdown("""
-    This is an independent prototype exploring a possible way to organize project inquiries. It is not a Cynbit product and is not connected to Cynbit systems.
+    This is an independent assessment prototype exploring one way to organize project inquiries. “Cynbit Revio” is the project label; this is not an official Cynbit or Revio feature and it is not connected to Cynbit systems.
 
     **What it does**
     - Uses a lightweight text classifier to suggest a service category.
